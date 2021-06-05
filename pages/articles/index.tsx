@@ -12,7 +12,7 @@ import styles from '../../styles/Home.module.css'
 const perPage = 2;
 
 const Articles = (props: any) => {
-  console.log(`props`, props)
+  // console.log(`props`, props)
   const [articles, setArticles] = useState(props.articles);
   const [count, setCount] = useState(0);
 
@@ -40,7 +40,7 @@ const Articles = (props: any) => {
 
     const start = perPage * selected;
     const end = ((perPage * selected) + perPage) - 1;
-    console.log(`start, end`, start, end)
+    // console.log(`start, end`, start, end)
 
     const { data, count }: any = await fetchArticles(start, end);
 
@@ -105,11 +105,13 @@ const Articles = (props: any) => {
 export async function getServerSideProps({ query: { page = 0 } }) {
   let articles = [];
 
-  const start = Math.ceil(parseInt(page) + perPage);
-  const end = (Math.ceil(parseInt(page) + perPage) + 1);
+  // using range.
+  const start = parseInt(page) > 1 ? Math.ceil(parseInt(page) * perPage) - perPage : parseInt(page);
+  const end = (start + perPage) - 1;
+
+  // Fecth articles.
   const { data, count }: any = await fetchArticles(start, end);
   articles = data;
-  console.log(`starts, ends`, start, end)
 
   return {
     props: {

@@ -5,7 +5,6 @@ export const fetchArticles = async (start: number, end: number,) => {
   try {
     // const start = limit * page;
     // const end = ((limit * page) + limit) - 1;
-    console.log(`start, end`, start, end)
     let result = await supabase.from('articles')
       .select("*", { count: "exact" })
       .order("id", { ascending: true })
