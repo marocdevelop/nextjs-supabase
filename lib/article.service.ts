@@ -1,7 +1,6 @@
 import { supabase } from "./supabase"
 
 // Fetch articles.
-// export const fetchArticles = async (limit: number, page: number,) => {
 export const fetchArticles = async (start: number, end: number,) => {
   try {
     // const start = limit * page;
