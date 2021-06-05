@@ -1,18 +1,17 @@
 import { useEffect, useState } from 'react';
 import Router, { withRouter } from 'next/router'
-
 import ReactPaginate from 'react-paginate';
 
+// Import services.
 import { fetchArticles } from '../../lib/article.service';
-
+// Import models.
 import Article from '../../models/Article';
-
+// Import styles.
 import styles from '../../styles/Home.module.css'
-
+// Declar variables.
 const perPage = 2;
 
 const Articles = (props: any) => {
-  // console.log(`props`, props)
   const [articles, setArticles] = useState(props.articles);
   const [count, setCount] = useState(0);
 
@@ -33,21 +32,21 @@ const Articles = (props: any) => {
     const currentQuery = { ...props.router.query };
     currentQuery.page = selected + 1;
 
+    // Update current route.
     props.router.push({
-        pathname: currentPath,
-        query: currentQuery,
+      pathname: currentPath,
+      query: currentQuery,
     });
 
     const start = perPage * selected;
     const end = ((perPage * selected) + perPage) - 1;
-    // console.log(`start, end`, start, end)
-
     const { data, count }: any = await fetchArticles(start, end);
 
     setArticles(data);
     setCount(count);
   };
 
+  // Render list articles.
   const renderListArticles = (props: any) => {
     return (
       <>
@@ -68,16 +67,6 @@ const Articles = (props: any) => {
         </ul>
 
         <ReactPaginate
-          // previousLabel={'previous'}
-          // nextLabel={'next'}
-          // breakLabel={'...'}
-          // breakClassName={'break-me'}
-          // pageCount={count / perPage}
-          // marginPagesDisplayed={2}
-          // pageRangeDisplayed={5}
-          // onPageChange={handlePageClick}
-          // containerClassName={'pagination'}
-          // activeClassName={'active'}
           previousLabel={'previous'}
           nextLabel={'next'}
           breakLabel={'...'}
@@ -94,6 +83,7 @@ const Articles = (props: any) => {
       </>
     );
   }
+
   return (
     <div className={styles.container}>
       <h1>Articles</h1>
@@ -104,9 +94,10 @@ const Articles = (props: any) => {
 
 export async function getServerSideProps({ query: { page = 0 } }) {
   let articles = [];
+  const currentPage = page;
 
   // using range.
-  const start = parseInt(page) > 1 ? Math.ceil(parseInt(page) * perPage) - perPage : parseInt(page);
+  const start = currentPage > 1 ? Math.ceil(currentPage * perPage) - perPage : currentPage;
   const end = (start + perPage) - 1;
 
   // Fecth articles.
@@ -117,7 +108,7 @@ export async function getServerSideProps({ query: { page = 0 } }) {
     props: {
       articles,
       count: count,
-      page: parseInt(page),
+      page: currentPage,
     },
   };
 }
