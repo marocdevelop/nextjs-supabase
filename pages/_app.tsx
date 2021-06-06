@@ -26,6 +26,11 @@ function MyApp({ Component, pageProps }: AppProps) {
             <a>Auth</a>
           </Link>
         </li>
+        <li>
+          <Link href="/auth/profile">
+            <a>Profile</a>
+          </Link>
+        </li>
       </ul>
       <Component {...pageProps} />
     </>

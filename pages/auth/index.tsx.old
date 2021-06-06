@@ -1,0 +1,20 @@
+import React from 'react'
+import Login from '../../src/components/login';
+import Register from '../../src/components/register';
+
+const Auth = () => {
+  return (
+    <>
+      <h1>Auth</h1>
+      <hr />
+      <h2>Register</h2>
+      <Register />
+      <hr />
+      <h2>Login</h2>
+      <Login />
+    </>
+  )
+}
+
+
+export default Auth;
